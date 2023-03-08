@@ -6,12 +6,23 @@ def log_info(text):
     print('[INFO] ' + text)
 
 async def run_cmds(address, commands):
+    # stats
+    cmd_count = 0
+
     log_info('START')
     async with BleakClient(address) as client:
         log_info('BT Connected')
 
         cmd_ptr = 0
         while cmd_ptr < len(commands):
+            # stats
+            cmd_count += 1
+            if cmd_count % 50 == 0:
+                print('========= [STATS] =========')
+                print(f'Command counts: {cmd_count}')
+                print(f'Current commands dict: {commands}')
+                print('===========================')
+
             log_info(f'Running cmd #{cmd_ptr + 1}')
             cmd = commands[cmd_ptr]
             if 'goto' not in cmd:
