@@ -1,7 +1,6 @@
 import asyncio
 import time
 from bleak import BleakClient
-from crccheck.crc import Crc8Maxim
 
 
 async def run_cmds(address, commands):

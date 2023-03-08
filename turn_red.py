@@ -1,7 +1,6 @@
 import asyncio
 import time
 from bleak import BleakClient
-from crccheck.crc import Crc8Maxim
 
 # destination address
 address = '21:0a:00:06:5a:b2'
