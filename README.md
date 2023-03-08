@@ -1,5 +1,7 @@
 # smartled_hack
 A reverse-engineered effort for Smart LED products.
+This project provides tools to control off-the-shelf smart LED products.
+
 
 ## Hardware
 - Raspberry Pi 3B+ (or any Linux/Bluetooth-capable devices)
@@ -22,4 +24,7 @@ A reverse-engineered effort for Smart LED products.
   * `twinkle`: `ff04` (on, speed 4)
 
 ## Demo
+This device is the work by Wan-Chien Lin, featuring in LEDucation 2023.
+
 ![](pics/demo_green_red.gif)
+
