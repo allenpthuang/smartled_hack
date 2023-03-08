@@ -1,5 +1,5 @@
 # smartled_hack
-A reverse-engineered effort for Smart LED products.
+A reverse-engineering effort for Smart LED products.
 This project provides tools to control off-the-shelf smart LED products.
 
 
