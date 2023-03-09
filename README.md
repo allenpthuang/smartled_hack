@@ -28,6 +28,30 @@ This device is the work by Wan-Chien Lin, featuring in LEDucation 2023.
 
 ![](pics/demo_green_red.gif)
 
+## Presets
+The presets are shared between `PRESET` mode and `SOUND` mode.
+
+  	1. seven color fade
+  	2. RGB fade
+  	3. seven color breathe
+  	4. RGB breathe
+  	5. red & green fade
+  	6. red & blue fade
+  	7. green & blue fade
+  	8. seven color jump
+  	9. RGB jump
+  	10. seven color flash
+  	11. RGB flash
+  	12. red flash
+  	13. green flash
+  	14. blue flash
+  	15. yellow flash
+  	16. purple flash
+  	17. cyan flash
+  	18. white flash
+  	19. yellow & purple flash
+  	20. purple & cyan flash
+
 ## Packet Structure
 total = 20 bytes
 ```
