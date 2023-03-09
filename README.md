@@ -65,8 +65,8 @@ total = 20 bytes
 07: B 0x00 - 0xff
 08: padding 0x00
 09: brightness 0x01 - 0x64 (1 - 100, 100 levels)
-10: Sound on/off 0x00 or 0xff
-11: Sound preset 0x00 - 0x13 (0 - 19, 20 modes)
+10: sound_onoff 0x00 or 0xff
+11: sound_preset 0x00 - 0x13 (0 - 19, 20 modes)
 12: Sound sensitivity 0x01 - 0x0a (1 - 10, 10 levels)
 13: twinkle_toggle 0x00 or 0xff (off/on)
 14: twinkle speed 0x01 - 0x04 (1 - 4, 4 speeds)
@@ -90,13 +90,72 @@ where:
   color:              0xRR 0xGG 0xBB (hex RGB color values, 3 bytes)
   padding_1:          0x00
   brightness:         0x01 - 0x64 (1 - 100, 100 levels)
-  sound_toggle:       0x00 or 0xff (off or on)
+  sound_onoff:       0x00 or 0xff (off or on)
   sound_preset:       0x00 - 0x13 (0 - 19, 20 modes)
   sound_sensitivity:  0x01 - 0x0a (1 - 10, 10 levels)
-  twinkle_toggle:     0x00 or 0xff (off or on)
+  twinkle_onoff:     0x00 or 0xff (off or on)
   twinkle_speed:      0x01 - 0x04 (1 - 4, 4 speeds)
-  meteor_toggle:      0x00 or 0xff (off or on)
+  meteor_onoff:      0x00 or 0xff (off or on)
   meteor_preset:      0x01 - 0x14 (1 - 20, 20 presets)
   meteor_speed:       0x01 - 0x0a (1 - 10, 10 speeds)
   padding_2:          0x00 0xaa (2 bytes)
+```
+
+## Formal Structure as a C++ class
+```
+g++ -std=c++20 -o btcmd_test btcmd_test.cpp
+./btcmd_test
+```
+Output
+```
+BT packet size: 20
+```
+More details in `btcmd.h`.
+```C++
+class BTCmd {
+ public:
+  // Header
+  HeaderPadding header : 8 = HeaderPadding::HEAD;
+
+  // Power
+  OnOff power : 8 = OnOff::ON; // off: 0x00; on: 0xff
+
+  // Operation Mode
+  OpMode opmode : 8 = OpMode::PRESET; // preset: 0x00; manual: 0x01; sound: 0x04
+
+  // Preset
+  Preset preset : 8 = Preset::SEVEN_COLOR_FADE; // 0x00 ~ 0x13 (0 - 19)
+  int speed : 8 = 0x01; // 0x01 ~ 0x0a (1 - 10)
+
+  // Manual Mode
+  uint8_t red = 0xff;
+  uint8_t green = 0xff;
+  uint8_t blue = 0xff;
+  // TODO(allenpthuang): check if it is in fact
+  // `unit8 white = 0xff;`
+
+  // Padding
+  HeaderPadding padding_1 : 8 = HeaderPadding::PADDING_1;
+
+  // Brightness
+  int brightness : 8 = 0x01; // 0x01 ~ 0x64 (1 - 100)
+
+  // Sound
+  OnOff sound_onoff : 8 = OnOff::OFF; // off: 0x00; on: 0xff
+  Preset sound_preset : 8 = Preset::SEVEN_COLOR_FADE; // 0x00 ~ 0x13 (0 - 19)
+  int sound_sensitivity : 8 = 0x01; // 0x01 ~ 0x0a (1 - 10)
+
+  // Twinkle
+  OnOff twinkle_onoff : 8 = OnOff::OFF; // off: 0x00; on: 0xff
+  int twinkle_speed : 8 = 0x01; // 0x01 ~ 0x04 (1 - 4)
+
+  // Meteor
+  OnOff meteor_onoff : 8 = OnOff::OFF; // off: 0x00; on: 0xff
+  MeteorPreset meteor_preset : 8 = MeteorPreset::SEVEN_COLOR_FADE; // 0x01 ~ 0x14 (1 - 20)
+  int meteor_speed : 8 = 0x01; // 0x01 ~ 0x04 (1 - 4)
+
+  // Padding
+  HeaderPadding padding_2 : 8 = HeaderPadding::PADDING_1;
+  HeaderPadding padding_3 : 8 = HeaderPadding::PADDING_2;
+};
 ```
